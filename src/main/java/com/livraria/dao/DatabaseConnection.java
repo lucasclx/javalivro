@@ -9,7 +9,7 @@ public class DatabaseConnection {
     // IMPORTANTE: Altere estes valores para os da sua configuração local do MySQL.
     private static final String URL = "jdbc:mysql://localhost:3306/livraria_db?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root"; // seu usuário do MySQL
-    private static final String PASS = "password"; // sua senha do MySQL
+    private static final String PASS = ""; // sua senha do MySQL
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
