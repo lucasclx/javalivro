@@ -120,3 +120,4 @@ public class ItemCarrinho {
     public int hashCode() {
         return livro != null ? livro.getId() : 0;
     }
+}
