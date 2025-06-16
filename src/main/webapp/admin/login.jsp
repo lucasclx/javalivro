@@ -27,6 +27,7 @@
             <!-- Formulário de Login -->
             <form action="${pageContext.request.contextPath}/admin" method="POST" class="admin-login-form" id="adminLoginForm">
                 <input type="hidden" name="action" value="login">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                 
                 <!-- Mensagens de Erro/Sucesso -->
                 <c:if test="${not empty param.error}">

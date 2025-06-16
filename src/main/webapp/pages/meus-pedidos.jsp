@@ -113,6 +113,7 @@
                                 <form action="${pageContext.request.contextPath}/pedidos" method="POST" 
                                       style="display: inline;" onsubmit="return confirm('Tem certeza que deseja cancelar este pedido?')">
                                     <input type="hidden" name="action" value="cancelar">
+                                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                                     <input type="hidden" name="id" value="${pedido.id}">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                         Cancelar Pedido

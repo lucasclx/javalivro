@@ -49,6 +49,7 @@
                 <h3>🏠 Dados de Entrega</h3>
                 <form action="${pageContext.request.contextPath}/pedidos" method="POST" id="checkoutForm">
                     <input type="hidden" name="action" value="finalizar">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                     
                     <div class="mb-3">
                         <label for="enderecoEntrega" class="form-label">Endereço Completo de Entrega *</label>

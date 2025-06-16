@@ -11,6 +11,7 @@
         </c:if>
         <form action="${pageContext.request.contextPath}/auth" method="POST">
             <input type="hidden" name="action" value="cadastrar">
+            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome Completo</label>
                 <input type="text" class="form-control" id="nome" name="nome" required>

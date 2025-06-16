@@ -50,6 +50,7 @@
                             <h4>Itens no Carrinho (${sessionScope.carrinho.quantidadeTotalLivros})</h4>
                             <form action="${pageContext.request.contextPath}/carrinho" method="POST" style="display: inline;">
                                 <input type="hidden" name="action" value="limpar">
+                                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                                 <button type="submit" class="btn btn-outline-danger btn-sm" 
                                         onclick="return confirm('Deseja realmente limpar todo o carrinho?')">
                                     🗑️ Limpar Carrinho

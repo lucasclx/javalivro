@@ -86,6 +86,7 @@
             <div class="form-container">
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="book-form" id="bookForm">
                     <input type="hidden" name="action" value="salvarLivro">
+                    <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                     <c:if test="${isEditing}">
                         <input type="hidden" name="id" value="${livro.id}">
                     </c:if>
