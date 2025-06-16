@@ -1,0 +1,21 @@
+# Build directories
+build/
+target/
+
+# IDE files
+.classpath
+.project
+.settings/
+
+# Compiled class files
+*.class
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# Additional common directories
+bin/
+out/
