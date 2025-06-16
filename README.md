@@ -29,3 +29,12 @@ You may also set up Maven or Gradle to manage dependencies if preferred. Refer t
 4. Start the container and access the bookstore at `http://localhost:8080/javalivro`.
 
 This project is intended for educational purposes and may require additional setup (database schema, user accounts) depending on your environment.
+
+## Password storage
+
+Passwords are now hashed with SHA-256 before being stored in the database. Login
+operations compare the hashed value instead of the plain text password.
+
+If you already have user records saved with unhashed passwords, they will not be
+able to authenticate after this update. Either recreate those accounts or update
+their stored passwords to the new hashed format.

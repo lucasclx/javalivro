@@ -97,9 +97,12 @@ public class AuthServlet extends HttpServlet {
 
         usuarioDAO.inserir(novoUsuario);
 
+        // Obtém o utilizador já persistido (com a senha "hasheada")
+        Usuario usuarioPersistido = usuarioDAO.buscarPorEmail(email);
+
         // Após o registo, faz login automaticamente
         HttpSession session = request.getSession();
-        session.setAttribute("usuarioLogado", novoUsuario);
+        session.setAttribute("usuarioLogado", usuarioPersistido);
         response.sendRedirect(request.getContextPath() + "/livros");
     }
 }

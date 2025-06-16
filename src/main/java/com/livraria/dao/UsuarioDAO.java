@@ -1,6 +1,7 @@
 package com.livraria.dao;
 
 import com.livraria.model.Usuario;
+import com.livraria.util.PasswordUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,16 +16,18 @@ public class UsuarioDAO {
      * @return Um objeto Usuario se as credenciais forem válidas, caso contrário, null.
      */
     public Usuario validarLogin(String email, String senha) throws SQLException {
-        String sql = "SELECT * FROM usuarios WHERE email = ? AND senha = ?";
+        String sql = "SELECT * FROM usuarios WHERE email = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
             stmt.setString(1, email);
-            stmt.setString(2, senha); // IMPORTANTE: Em produção, a senha deve ser "hasheada"!
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapResultSetToUsuario(rs);
+                    String hash = rs.getString("senha");
+                    if (PasswordUtil.verifyPassword(senha, hash)) {
+                        return mapResultSetToUsuario(rs);
+                    }
                 }
             }
         }
@@ -40,10 +43,13 @@ public class UsuarioDAO {
         String sql = "INSERT INTO usuarios (nome, email, senha, admin) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            
+
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
-            stmt.setString(3, usuario.getSenha());
+            String hash = PasswordUtil.hashPassword(usuario.getSenha());
+            stmt.setString(3, hash);
+            // também atualiza o objeto para não manter a senha em texto simples
+            usuario.setSenha(hash);
             stmt.setBoolean(4, usuario.isAdmin());
             
             return stmt.executeUpdate() > 0;
