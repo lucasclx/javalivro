@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    valor_total DECIMAL(10,2) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    endereco_entrega VARCHAR(255) NOT NULL,
+    observacoes VARCHAR(255),
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);

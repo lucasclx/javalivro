@@ -45,7 +45,6 @@
     <!-- Página de Boas-vindas -->
     <welcome-file-list>
         <welcome-file>livros</welcome-file>
-        <welcome-file>oi.html</welcome-file>
     </welcome-file-list>
 
 </web-app>
