@@ -47,7 +47,7 @@
 
             <div class="admin-user">
                 <div class="user-info">
-                    <span class="user-name">Olá, ${sessionScope.adminLogado.nome}</span>
+                    <span class="user-name">Olá, ${sessionScope.adminLogado}</span>
                     <span class="user-role">Administrador</span>
                 </div>
                 <div class="user-actions">
