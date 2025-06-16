@@ -374,6 +374,7 @@
                                            class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
                                         <form action="${pageContext.request.contextPath}/carrinho" method="POST" style="display: inline;">
                                             <input type="hidden" name="action" value="adicionar">
+                                            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                                             <input type="hidden" name="livroId" value="${livro.id}">
                                             <button type="submit" class="btn btn-sm btn-success">
                                                 🛒 Adicionar ao Carrinho
@@ -498,6 +499,7 @@
             <button class="modal-close" onclick="fecharModalEditarPerfil()">&times;</button>
         </div>
         <form id="formEditarPerfil" onsubmit="salvarPerfil(event)">
+            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="editNome">Nome Completo:</label>

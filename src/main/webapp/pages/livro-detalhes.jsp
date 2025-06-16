@@ -39,6 +39,7 @@
                 <div class="call-to-action my-4">
                     <form action="${pageContext.request.contextPath}/carrinho" method="POST">
                         <input type="hidden" name="action" value="adicionar">
+                        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
                         <input type="hidden" name="livroId" value="${livro.id}">
                         <button type="submit" class="btn btn-gold btn-lg">
                             <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
