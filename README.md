@@ -6,7 +6,7 @@ Javalivro is a simple web bookstore built with Java Servlets and JSP. The projec
 
 - **Java 21 or later** – the project targets JavaSE-21 as defined in the Eclipse configuration.
 - **Servlet container** – such as Apache Tomcat 9 to deploy the application.
-- **MySQL database** – connection parameters can be adjusted in [`DatabaseConnection.java`](src/main/java/com/livraria/dao/DatabaseConnection.java).
+- **MySQL database** – edit [`WEB-INF/db.properties`](src/main/webapp/WEB-INF/db.properties) with your connection details.
 - **Database schema** – SQL scripts are located in [`database/`](database/) and should be executed before running the application.
 
 ## Building
@@ -23,7 +23,7 @@ You may also set up Maven or Gradle to manage dependencies if preferred. Refer t
 
 ## Running
 
-1. Ensure MySQL is running and that the `DatabaseConnection` configuration matches your local credentials.
+1. Ensure MySQL is running and that the settings in `WEB-INF/db.properties` match your local credentials.
 2. Execute the SQL files in the `database/` directory to create the required tables.
 3. Deploy the contents of `src/main/webapp` together with the compiled classes in `build/classes` to your servlet container (e.g., copy them into Tomcat's `webapps/javalivro`).
 4. Start the container and access the bookstore at `http://localhost:8080/javalivro`.
