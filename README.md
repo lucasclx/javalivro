@@ -27,3 +27,8 @@ You may also set up Maven or Gradle to manage dependencies if preferred. Refer t
 3. Start the container and access the bookstore at `http://localhost:8080/javalivro`.
 
 This project is intended for educational purposes and may require additional setup (database schema, user accounts) depending on your environment.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
