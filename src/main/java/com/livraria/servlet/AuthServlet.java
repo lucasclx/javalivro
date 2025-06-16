@@ -69,6 +69,7 @@ public class AuthServlet extends HttpServlet {
 
         if (usuario != null) {
             HttpSession session = request.getSession();
+            usuario.setSenha(null); // nunca mantém o hash em sessão
             session.setAttribute("usuarioLogado", usuario);
             response.sendRedirect(request.getContextPath() + "/livros");
         } else {
@@ -97,8 +98,9 @@ public class AuthServlet extends HttpServlet {
 
         usuarioDAO.inserir(novoUsuario);
 
-        // Obtém o utilizador já persistido (com a senha "hasheada")
+        // Obtém o utilizador já persistido (com o hash bcrypt)
         Usuario usuarioPersistido = usuarioDAO.buscarPorEmail(email);
+        usuarioPersistido.setSenha(null); // não armazena o hash na sessão
 
         // Após o registo, faz login automaticamente
         HttpSession session = request.getSession();
