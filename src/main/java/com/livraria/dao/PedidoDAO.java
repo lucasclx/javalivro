@@ -29,7 +29,7 @@ public class PedidoDAO {
     public int inserir(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedidos (usuario_id, valor_total, status, endereco_entrega, observacoes) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             stmt.setInt(1, pedido.getUsuarioId());
@@ -57,7 +57,7 @@ public class PedidoDAO {
     public Pedido buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM pedidos WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -84,7 +84,7 @@ public class PedidoDAO {
         String sql = "SELECT * FROM pedidos WHERE usuario_id = ? ORDER BY data_pedido DESC";
         List<Pedido> pedidos = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, usuarioId);
@@ -114,7 +114,7 @@ public class PedidoDAO {
                     "ORDER BY p.data_pedido DESC";
         List<Pedido> pedidos = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             
@@ -149,7 +149,7 @@ public class PedidoDAO {
                     "ORDER BY p.data_pedido DESC";
         List<Pedido> pedidos = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, status.name());
@@ -182,7 +182,7 @@ public class PedidoDAO {
     public boolean atualizarStatus(int pedidoId, Pedido.StatusPedido novoStatus) throws SQLException {
         String sql = "UPDATE pedidos SET status = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, novoStatus.name());
@@ -199,7 +199,7 @@ public class PedidoDAO {
         String sql = "UPDATE pedidos SET valor_total = ?, status = ?, endereco_entrega = ?, " +
                     "observacoes = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setBigDecimal(1, pedido.getValorTotal());
@@ -236,7 +236,7 @@ public class PedidoDAO {
                     "ORDER BY p.data_pedido DESC";
         List<Pedido> pedidos = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setTimestamp(1, Timestamp.valueOf(dataInicio));
@@ -266,7 +266,7 @@ public class PedidoDAO {
     public BigDecimal calcularTotalVendas() throws SQLException {
         String sql = "SELECT SUM(valor_total) as total FROM pedidos WHERE status IN ('CONFIRMADO', 'ENVIADO', 'ENTREGUE')";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             
@@ -283,7 +283,7 @@ public class PedidoDAO {
     public int contarPorStatus(Pedido.StatusPedido status) throws SQLException {
         String sql = "SELECT COUNT(*) as total FROM pedidos WHERE status = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, status.name());

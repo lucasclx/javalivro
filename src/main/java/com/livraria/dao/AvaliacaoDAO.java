@@ -15,7 +15,7 @@ public class AvaliacaoDAO {
     public boolean inserir(Avaliacao avaliacao) throws SQLException {
         String sql = "INSERT INTO avaliacoes (usuario_id, livro_id, nota, comentario, data_avaliacao) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             stmt.setInt(1, avaliacao.getUsuarioId());
@@ -50,7 +50,7 @@ public class AvaliacaoDAO {
         
         List<Avaliacao> avaliacoes = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -85,7 +85,7 @@ public class AvaliacaoDAO {
         
         List<Avaliacao> avaliacoes = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, usuarioId);
@@ -109,7 +109,7 @@ public class AvaliacaoDAO {
     public boolean usuarioJaAvaliou(int usuarioId, int livroId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM avaliacoes WHERE usuario_id = ? AND livro_id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, usuarioId);
@@ -132,7 +132,7 @@ public class AvaliacaoDAO {
                     "FROM avaliacoes " +
                     "WHERE livro_id = ? AND aprovado = true";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -152,7 +152,7 @@ public class AvaliacaoDAO {
     public int contarAvaliacoes(int livroId) throws SQLException {
         String sql = "SELECT COUNT(*) as total FROM avaliacoes WHERE livro_id = ? AND aprovado = true";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -178,7 +178,7 @@ public class AvaliacaoDAO {
         
         int[] distribuicao = new int[6]; // índice 0 não usado, 1-5 para as notas
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -205,7 +205,7 @@ public class AvaliacaoDAO {
                     "INNER JOIN usuarios u ON a.usuario_id = u.id " +
                     "WHERE a.id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -233,7 +233,7 @@ public class AvaliacaoDAO {
     public boolean atualizar(Avaliacao avaliacao) throws SQLException {
         String sql = "UPDATE avaliacoes SET nota = ?, comentario = ?, data_atualizacao = CURRENT_TIMESTAMP WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, avaliacao.getNota());
@@ -250,7 +250,7 @@ public class AvaliacaoDAO {
     public boolean deletar(int id) throws SQLException {
         String sql = "DELETE FROM avaliacoes WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -264,7 +264,7 @@ public class AvaliacaoDAO {
     public boolean aprovar(int id) throws SQLException {
         String sql = "UPDATE avaliacoes SET aprovado = true WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -286,7 +286,7 @@ public class AvaliacaoDAO {
         
         List<Avaliacao> avaliacoes = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             
@@ -321,7 +321,7 @@ public class AvaliacaoDAO {
         
         List<Avaliacao> avaliacoes = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -356,7 +356,7 @@ public class AvaliacaoDAO {
         String sqlInsert = "INSERT INTO avaliacao_curtidas (avaliacao_id, usuario_id) VALUES (?, ?)";
         String sqlUpdate = "UPDATE avaliacoes SET curtidas = curtidas + 1 WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection()) {
+        try (Connection conn = DataSourceFactory.getConnection()) {
             conn.setAutoCommit(false);
             
             try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert);
@@ -384,7 +384,7 @@ public class AvaliacaoDAO {
     public boolean usuarioJaCurtiu(int avaliacaoId, int usuarioId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM avaliacao_curtidas WHERE avaliacao_id = ? AND usuario_id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, avaliacaoId);
@@ -416,7 +416,7 @@ public class AvaliacaoDAO {
         
         List<Object[]> resultado = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, limite);

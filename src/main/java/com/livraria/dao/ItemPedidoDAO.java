@@ -16,7 +16,7 @@ public class ItemPedidoDAO {
     public boolean inserir(ItemPedido item) throws SQLException {
         String sql = "INSERT INTO itens_pedido (pedido_id, livro_id, quantidade, preco_unitario, subtotal) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, item.getPedidoId());
@@ -35,7 +35,7 @@ public class ItemPedidoDAO {
     public boolean inserirLote(List<ItemPedido> itens) throws SQLException {
         String sql = "INSERT INTO itens_pedido (pedido_id, livro_id, quantidade, preco_unitario, subtotal) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             conn.setAutoCommit(false); // Inicia transação
@@ -62,7 +62,7 @@ public class ItemPedidoDAO {
             
         } catch (SQLException e) {
             // Em caso de erro, faz rollback
-            try (Connection conn = DatabaseConnection.getConnection()) {
+            try (Connection conn = DataSourceFactory.getConnection()) {
                 conn.rollback();
             }
             throw e;
@@ -81,7 +81,7 @@ public class ItemPedidoDAO {
         
         List<ItemPedido> itens = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, pedidoId);
@@ -105,7 +105,7 @@ public class ItemPedidoDAO {
                     "INNER JOIN livros l ON ip.livro_id = l.id " +
                     "WHERE ip.id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -125,7 +125,7 @@ public class ItemPedidoDAO {
     public boolean atualizar(ItemPedido item) throws SQLException {
         String sql = "UPDATE itens_pedido SET quantidade = ?, preco_unitario = ?, subtotal = ? WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, item.getQuantidade());
@@ -143,7 +143,7 @@ public class ItemPedidoDAO {
     public boolean deletar(int id) throws SQLException {
         String sql = "DELETE FROM itens_pedido WHERE id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, id);
@@ -157,7 +157,7 @@ public class ItemPedidoDAO {
     public boolean deletarPorPedidoId(int pedidoId) throws SQLException {
         String sql = "DELETE FROM itens_pedido WHERE pedido_id = ?";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, pedidoId);
@@ -178,7 +178,7 @@ public class ItemPedidoDAO {
         
         List<ItemPedido> itens = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -202,7 +202,7 @@ public class ItemPedidoDAO {
                     "INNER JOIN pedidos p ON ip.pedido_id = p.id " +
                     "WHERE ip.livro_id = ? AND p.status IN ('CONFIRMADO', 'ENVIADO', 'ENTREGUE')";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, livroId);
@@ -231,7 +231,7 @@ public class ItemPedidoDAO {
         
         List<Object[]> resultado = new ArrayList<>();
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setInt(1, limite);
@@ -259,7 +259,7 @@ public class ItemPedidoDAO {
                     "INNER JOIN pedidos p ON ip.pedido_id = p.id " +
                     "WHERE p.status IN ('CONFIRMADO', 'ENVIADO', 'ENTREGUE')";
         
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             

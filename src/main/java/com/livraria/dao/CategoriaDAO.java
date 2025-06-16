@@ -11,7 +11,7 @@ public class CategoriaDAO {
         List<Categoria> categorias = new ArrayList<>();
         String sql = "SELECT * FROM categorias ORDER BY nome";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -27,7 +27,7 @@ public class CategoriaDAO {
 
     public Categoria buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM categorias WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {

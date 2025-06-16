@@ -12,7 +12,7 @@ public class LivroDAO {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros WHERE ativo = true";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -25,7 +25,7 @@ public class LivroDAO {
 
     public Livro buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM livros WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -40,7 +40,7 @@ public class LivroDAO {
     public List<Livro> listarPorCategoria(int categoriaId) throws SQLException {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros WHERE categoria_id = ? AND ativo = true";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, categoriaId);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -55,7 +55,7 @@ public class LivroDAO {
     public List<Livro> listarDestaques() throws SQLException {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros WHERE destaque = true AND ativo = true LIMIT 5";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -68,7 +68,7 @@ public class LivroDAO {
     public List<Livro> buscarPorTermo(String termo) throws SQLException {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros WHERE (titulo LIKE ? OR autor LIKE ?) AND ativo = true";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, "%" + termo + "%");
             stmt.setString(2, "%" + termo + "%");
@@ -83,7 +83,7 @@ public class LivroDAO {
 
     public boolean inserir(Livro livro) throws SQLException {
         String sql = "INSERT INTO livros (titulo, autor, editora, isbn, ano_publicacao, numero_paginas, descricao, preco, estoque, categoria_id, imagem_url, destaque, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             setStatementParameters(stmt, livro);
             stmt.setBoolean(13, true); // Ativo por padrão
@@ -93,7 +93,7 @@ public class LivroDAO {
 
     public boolean atualizar(Livro livro) throws SQLException {
         String sql = "UPDATE livros SET titulo = ?, autor = ?, editora = ?, isbn = ?, ano_publicacao = ?, numero_paginas = ?, descricao = ?, preco = ?, estoque = ?, categoria_id = ?, imagem_url = ?, destaque = ?, ativo = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             setStatementParameters(stmt, livro);
             stmt.setBoolean(13, livro.isAtivo());
@@ -105,7 +105,7 @@ public class LivroDAO {
     public boolean deletar(int id) throws SQLException {
         // Soft delete: apenas marca como inativo
         String sql = "UPDATE livros SET ativo = false WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0;
@@ -117,7 +117,7 @@ public class LivroDAO {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT * FROM livros ORDER BY id DESC";
 
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = DataSourceFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 

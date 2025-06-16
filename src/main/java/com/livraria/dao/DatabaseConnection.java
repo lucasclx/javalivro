@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * @deprecated Use {@link DataSourceFactory#getConnection()} em vez desta classe.
+ */
+@Deprecated
 public class DatabaseConnection {
 
     // IMPORTANTE: Altere estes valores para os da sua configuração local do MySQL.
