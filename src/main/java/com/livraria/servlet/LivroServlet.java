@@ -5,7 +5,7 @@ import com.livraria.dao.LivroDAO;
 import com.livraria.model.Categoria;
 import com.livraria.model.Livro;
 import com.livraria.model.Usuario;
-import com.livraria.util.JsonConverter;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +23,7 @@ public class LivroServlet extends HttpServlet {
     
     private LivroDAO livroDAO;
     private CategoriaDAO categoriaDAO;
+    private final Gson gson = new Gson();
 
     @Override
     public void init() throws ServletException {
@@ -119,18 +120,18 @@ public class LivroServlet extends HttpServlet {
         switch (tipo != null ? tipo : "") {
             case "destaques":
                 List<Livro> destaques = livroDAO.listarDestaques();
-                jsonResponse = JsonConverter.toJson(destaques);
+                jsonResponse = gson.toJson(destaques);
                 break;
             case "categoria":
                 int categoriaId = Integer.parseInt(request.getParameter("categoria"));
                 List<Livro> livrosPorCategoria = livroDAO.listarPorCategoria(categoriaId);
-                jsonResponse = JsonConverter.toJson(livrosPorCategoria);
+                jsonResponse = gson.toJson(livrosPorCategoria);
                 break;
             case "busca":
                 String termo = request.getParameter("q");
                 if (termo != null && !termo.trim().isEmpty()) {
                     List<Livro> resultadoBusca = livroDAO.buscarPorTermo(termo);
-                    jsonResponse = JsonConverter.toJson(resultadoBusca);
+                    jsonResponse = gson.toJson(resultadoBusca);
                 }
                 break;
             default:
